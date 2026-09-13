@@ -3,34 +3,32 @@
 
 int main() {
     // 1. Создаем окно 800x600
-    sf::RenderWindow window(sf::VideoMode({ 800 , 600 }), "magazin");
+    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "magazin");
 
-    // 2. Загружаем шрифт из системы или папки проекта
+    // 2. Загружаем шрифт из системы
     sf::Font font;
     if (!font.openFromFile("C:\\Windows\\Fonts\\arial.ttf")) {
         std::cerr << "Ошибка загрузки шрифта!\n";
         return -1;
     }
 
-    // 3. Создаем плашку/карточку (прямоугольник)
-    sf::RectangleShape card(sf::Vector2f(800.f, 600.f));
-    card.setPosition(sf::Vector2f(100.f, 100.f));
-    card.setFillColor(sf::Color(30, 30, 45)); // Темно-синий фон
-    card.setOutlineColor(sf::Color(100, 100, 250)); // Голубая рамка
-    card.setOutlineThickness(2.f);
+    // 3. Загружаем фоновую картинку
+    sf::Texture bgTexture;
+    if (!bgTexture.loadFromFile("pervi-ecran.png")) {
+        std::cerr << "Не удалось загрузить фон!\n";
+        return -1;
+    } // Лишняя точка с запятой убрана
 
-    // 4. Настраиваем крупный заголовок
-    sf::Text titleText(font, "magazin product ", 48);
-    titleText.setFillColor(sf::Color::White);
-    titleText.setStyle(sf::Text::Bold);
-    titleText.setPosition(sf::Vector2f(220.f, 200.f));
+    sf::Sprite background(bgTexture);
 
+    // 4. Настраиваем текст кнопки
+    sf::Text subText(font, "producti", 48);
+    subText.setFillColor(sf::Color(255, 255, 255));
+    subText.setPosition(sf::Vector2f(320.f, 300.f));
 
-
-    // 5. Настраиваем подзаголовок
-    sf::Text subText(font, "magazin productov ", 20);
-    subText.setFillColor(sf::Color(10 , 30 , 40 ));
-    subText.setPosition(sf::Vector2f(210.f, 100.f));
+    // Переменные для мигания кнопки
+    sf::Clock blinkClock;
+    bool isVisible = true;
 
     // Главный цикл отрисовки
     while (window.isOpen()) {
@@ -41,18 +39,16 @@ int main() {
             }
         }
 
+
         // --- ОТРИСОВКА ---
-        // Очищаем экран фоновым темным цветом (RGB: 15, 15, 25)
         window.clear(sf::Color(15, 15, 25));
 
-        // Рисуем объекты слой за слоем (снизу вверх)
-        window.draw(card);
-        window.draw(titleText);
-        window.draw(subText);
+        // 1. Рисуем картинку из Illustrator
+        window.draw(background);
 
-        // Выводим собранный кадр на экран
+        // Выводим кадр
         window.display();
     }
 
     return 0;
-}
+};
