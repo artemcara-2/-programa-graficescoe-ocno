@@ -25,6 +25,8 @@ int main() {
     titleText.setStyle(sf::Text::Bold);
     titleText.setPosition(sf::Vector2f(220.f, 200.f));
 
+
+
     // 5. Настраиваем подзаголовок
     sf::Text subText(font, "magazin productov ", 20);
     subText.setFillColor(sf::Color(10 , 30 , 40 ));
